@@ -110,6 +110,7 @@ class DataBase:
                 data = pd.DataFrame(
                     res, columns=[
                         elem[0] for elem in colnames])
+                data.index += 1
                 return data
 
         except Exception as e:
