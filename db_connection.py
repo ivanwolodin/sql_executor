@@ -1,4 +1,5 @@
 import random
+import re
 import sqlite3
 import time
 
@@ -9,15 +10,14 @@ from logger import logger
 
 class DataBase:
     """ creates db and fills it with values"""
+    _available_database_type = ['MySQL', ]
+    _available_actions = ['SELECT', 'UPDATE', 'INSERT', 'DELETE', ]
+    _currently_not_available = ['CREATE', 'DROP', ]
 
     def __init__(self, which_database=':memory:'):
         self._conn = None
         self._cursor = None
 
-        self._available_database_type = ['MySQL', ]
-
-        self._available_actions = ['SELECT', 'UPDATE', 'INSERT', 'DELETE', ]
-        self._currently_not_available = ['CREATE', 'DROP', ]
         self.which_database = ''
 
         self.capture_database(database_type=which_database)
@@ -34,6 +34,12 @@ class DataBase:
     @staticmethod
     def random_date(start, end, prop):
         return DataBase.str_time_prop(start, end, '%Y.%m.%d', prop)
+
+    @staticmethod
+    def _remove_comments(string):
+        string = re.sub(re.compile('/\*.*?\*/', re.DOTALL), '', string)
+        string = string.lstrip(' ')
+        return string
 
     def create_db_in_memory(self) -> None:
         """
@@ -105,6 +111,7 @@ class DataBase:
             return [['Check sql syntax or no such table']]
 
     def _validate_sql(self, sql_statement):
+        sql_statement = DataBase._remove_comments(sql_statement)
         try:
             action = sql_statement.split(' ', 1)[0]
         except Exception as e:
