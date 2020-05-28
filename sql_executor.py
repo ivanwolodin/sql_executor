@@ -6,6 +6,7 @@ from PyQt5.QtCore import Qt, QAbstractTableModel
 
 from db_connection import DataBase
 from db_changer_dialog import DialogWindow
+from logger import logger
 
 
 class TableModel(QAbstractTableModel):
@@ -47,6 +48,7 @@ class MyWindow(QMainWindow):
 
         QMainWindow.__init__(self)
         uic.loadUi("mainwindow.ui", self)
+        logger.info('App has started')
         self.data_base_obj = DataBase()
         self.pushButton.pressed.connect(self.execute_sql_request)
         self.comboBox.currentIndexChanged[str].connect(self.change_db)
@@ -64,6 +66,7 @@ class MyWindow(QMainWindow):
         elif data is not None:
             data = data
         else:
+            logger.error('Invalid data in table_view')
             raise Exception('Specify data')
         model = TableModel(data)
         self.tableViewSqlResult.setModel(model)
@@ -73,6 +76,7 @@ class MyWindow(QMainWindow):
         if db_type != ':memory:':
             self.dialog = DialogWindow(database_obj=self.data_base_obj, selected_db_type=db_type)
             self.dialog.show()
+            return
         self.data_base_obj.capture_database(database_type=db_type)
 
 

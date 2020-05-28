@@ -4,6 +4,8 @@ import time
 
 import pymysql
 
+from logger import logger
+
 
 class DataBase:
     """ creates db and fills it with values"""
@@ -84,12 +86,14 @@ class DataBase:
 
         except Exception as e:
             print(e)
+            logger.info('Wrong sql syntax or missing table. sql_statement={}'.format(sql_statement))
             return [['Check sql syntax or no such table']]
 
     def _validate_sql(self, sql_statement):
         try:
             action = sql_statement.split(' ', 1)[0]
         except Exception as e:
+            logger.info('Not sql request. sql_statement={}'.format(sql_statement))
             return False, [['Cannot validate sql']]
 
         action = action.upper()
@@ -114,6 +118,7 @@ class DataBase:
 
             except Exception as e:
                 self._conn.close()
+                logger.error('Cannot connect to :memory: Error: {}'.format(e))
                 print(e)
                 return False
             else:
@@ -131,6 +136,7 @@ class DataBase:
                     return True
                 return False
         else:
+            logger.info('This db has not yet implemented')
             print('This db has not yet implemented')
             return True
 
@@ -147,5 +153,17 @@ class DataBase:
             return True
 
         except Exception as e:
+            logger.info('Cannot connect to {}. '
+                        'User={}. '
+                        'Pass={}. '
+                        'Port={}. '
+                        'Db={}. '.format(
+                kwargs.get('host'),
+                kwargs.get('user'),
+                kwargs.get('password'),
+                kwargs.get('port'),
+                kwargs.get('database')
+            )
+            )
             print(e)
             return False
