@@ -48,7 +48,7 @@ class MyWindow(QMainWindow):
     def __init__(self, parent=None):
 
         QMainWindow.__init__(self)
-        uic.loadUi("mainwindow.ui", self)
+        uic.loadUi('mainwindow.ui', self)
         logger.info('App has started')
         self.data_base_obj = DataBase()
         self.pushButton.pressed.connect(self.execute_sql_request)

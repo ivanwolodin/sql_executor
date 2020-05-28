@@ -4,8 +4,8 @@ import sys
 from logging.handlers import TimedRotatingFileHandler
 
 FORMATTER = logging.Formatter(
-    "%(asctime)s — %(name)s — %(levelname)s — %(message)s")
-LOG_FILE = "sql_executor.log"
+    '%(asctime)s — %(name)s — %(levelname)s — %(message)s')
+LOG_FILE = 'sql_executor.log'
 
 
 def get_console_handler():

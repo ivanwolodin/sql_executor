@@ -44,12 +44,12 @@ class DataBase:
         :return:
         """
 
-        self._cursor.execute("CREATE TABLE stocks "
-                             "(production_date text,"
-                             " status text,"
-                             " salesman text,"
-                             " real_value int,"
-                             " price real)")
+        self._cursor.execute('CREATE TABLE stocks '
+                             '(production_date text,'
+                             ' status text,'
+                             ' salesman text,'
+                             ' real_value int,'
+                             ' price real)')
 
         for i in range(10):
             self._cursor.execute("INSERT INTO stocks VALUES "
@@ -59,8 +59,8 @@ class DataBase:
                                  "  {},  "
                                  "  {} "
                                  ") ".format(
-                                     DataBase.random_date("2008.01.01",
-                                                          "2020.01.01",
+                                     DataBase.random_date('2008.01.01',
+                                                          '2020.01.01',
                                                           random.random()),
                                      random.choice(['Buy', 'Sell', 'Rent']),
                                      random.choice(
@@ -132,7 +132,7 @@ class DataBase:
         if database_type == ':memory:':
             try:
                 self._conn = sqlite3.connect(
-                    "file::memory:?cache=shared", uri=True)
+                    'file::memory:?cache=shared', uri=True)
                 self._cursor = self._conn.cursor()
 
             except Exception as e:
