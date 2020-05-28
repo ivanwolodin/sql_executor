@@ -1,8 +1,0 @@
-2020-05-28 11:12:41,886 — sql_executor.log — INFO — App has started
-2020-05-28 11:13:01,491 — sql_executor.log — INFO — Cannot connect to f. User=f. Pass=f. Port=f. Db=f. 
-2020-05-28 11:13:42,900 — sql_executor.log — INFO — Wrong sql syntax or missing table. sql_statement=select * from stockss
-2020-05-28 11:14:35,928 — sql_executor.log — INFO — Wrong sql syntax or missing table. sql_statement=select * from stockss
-2020-05-28 11:15:07,332 — sql_executor.log — INFO — Wrong sql syntax or missing table. sql_statement=select * from students_infod
-2020-05-28 11:15:13,797 — sql_executor.log — INFO — Wrong sql syntax or missing table. sql_statement=select * from students_infod
-2020-05-28 11:15:57,899 — sql_executor.log — INFO — Wrong sql syntax or missing table. sql_statement=select * from stocks
-2020-05-28 11:46:39,353 — sql_executor.log — INFO — App has started
