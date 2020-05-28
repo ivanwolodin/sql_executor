@@ -44,6 +44,7 @@ class MyWindow(QMainWindow):
     pushButton
 
     """
+
     def __init__(self, parent=None):
 
         QMainWindow.__init__(self)
@@ -74,7 +75,9 @@ class MyWindow(QMainWindow):
     def change_db(self):
         db_type = self.comboBox.itemText(self.comboBox.currentIndex())
         if db_type != ':memory:':
-            self.dialog = DialogWindow(database_obj=self.data_base_obj, selected_db_type=db_type)
+            self.dialog = DialogWindow(
+                database_obj=self.data_base_obj,
+                selected_db_type=db_type)
             self.dialog.show()
             return
         self.data_base_obj.capture_database(database_type=db_type)

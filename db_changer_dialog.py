@@ -14,6 +14,7 @@ class DialogWindow(base_2, form_2):
         lineEditResultConnection
 
     """
+
     def __init__(self, database_obj, selected_db_type):
         super(base_2, self).__init__()
         self.setupUi(self)
@@ -36,16 +37,22 @@ class DialogWindow(base_2, form_2):
         self.port = self.lineEditPort.text()
         self.database = self.lineEditDb.text()
 
-        if not all([self.user, self.password, self.host, self.port, self.database]):
+        if not all([self.user,
+                    self.password,
+                    self.host,
+                    self.port,
+                    self.database]):
             self.lineEditResultConnection.setText('Fill empty fields!')
             return
 
         if self._change_database():
-            self.lineEditResultConnection.setText('Connected to {}'.format(self.host))
+            self.lineEditResultConnection.setText(
+                'Connected to {}'.format(self.host))
             # in case of successful connect close the window in 30 secs
             QTimer.singleShot(10000, self.close)
         else:
-            self.lineEditResultConnection.setText('Cant connect to {}'.format(self.host))
+            self.lineEditResultConnection.setText(
+                'Cant connect to {}'.format(self.host))
 
     def _change_database(self):
         return self._database_obj.capture_database(

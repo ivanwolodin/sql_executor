@@ -9,6 +9,7 @@ from logger import logger
 
 class DataBase:
     """ creates db and fills it with values"""
+
     def __init__(self, which_database=':memory:'):
         self._conn = None
         self._cursor = None
@@ -43,8 +44,12 @@ class DataBase:
         :return:
         """
 
-        self._cursor.execute('''CREATE TABLE stocks
-                     (production_date text, status text, salesman text, real_value int, price real)''')
+        self._cursor.execute("CREATE TABLE stocks "
+                             "(production_date text,"
+                             " status text,"
+                             " salesman text,"
+                             " real_value int,"
+                             " price real)")
 
         for i in range(10):
             self._cursor.execute("INSERT INTO stocks VALUES "
@@ -54,12 +59,19 @@ class DataBase:
                                  "  {},  "
                                  "  {} "
                                  ") ".format(
-                DataBase.random_date("2008.01.01", "2020.01.01", random.random()),
-                random.choice(['Buy', 'Sell', 'Rent']),
-                random.choice(['Lisa', 'John', 'Hanna', 'Peter', 'Alice']),
-                random.randint(10, 100),
-                round(random.uniform(30, 200), 2))
-            )
+                                     DataBase.random_date("2008.01.01",
+                                                          "2020.01.01",
+                                                          random.random()),
+                                     random.choice(['Buy', 'Sell', 'Rent']),
+                                     random.choice(
+                                         ['Lisa',
+                                          'John',
+                                          'Hanna',
+                                          'Peter',
+                                          'Alice']),
+                                     random.randint(10, 100),
+                                     round(random.uniform(30, 200), 2))
+                                 )
 
         self._conn.commit()
 
@@ -86,20 +98,26 @@ class DataBase:
 
         except Exception as e:
             print(e)
-            logger.info('Wrong sql syntax or missing table. sql_statement={}'.format(sql_statement))
+            logger.info(
+                'Wrong sql syntax or missing table.'
+                ' sql_statement={}.'
+                ' Error: {}'.format(sql_statement, e))
             return [['Check sql syntax or no such table']]
 
     def _validate_sql(self, sql_statement):
         try:
             action = sql_statement.split(' ', 1)[0]
         except Exception as e:
-            logger.info('Not sql request. sql_statement={}'.format(sql_statement))
+            logger.info(
+                'Not sql request. sql_statement={}. Error={}'.format(
+                    sql_statement, e))
             return False, [['Cannot validate sql']]
 
         action = action.upper()
         if action not in self._available_actions:
             if action in self._currently_not_available:
-                return False, [['Action {} is not implemented yet'.format(action)]]
+                return False, [
+                    ['Action {} is not implemented yet'.format(action)]]
 
             if action not in self._currently_not_available:
                 return False, [['Check sql syntax']]
@@ -113,7 +131,8 @@ class DataBase:
 
         if database_type == ':memory:':
             try:
-                self._conn = sqlite3.connect("file::memory:?cache=shared", uri=True)
+                self._conn = sqlite3.connect(
+                    "file::memory:?cache=shared", uri=True)
                 self._cursor = self._conn.cursor()
 
             except Exception as e:
@@ -126,7 +145,8 @@ class DataBase:
                 self.create_db_in_memory()
                 return True
             finally:
-                """ no conn.close() since we can maintain connection during life of our application"""
+                """ no conn.close() since we can maintain connection
+                 during life of our application"""
                 pass
 
         if database_type in self._available_database_type:
@@ -158,12 +178,12 @@ class DataBase:
                         'Pass={}. '
                         'Port={}. '
                         'Db={}. '.format(
-                kwargs.get('host'),
-                kwargs.get('user'),
-                kwargs.get('password'),
-                kwargs.get('port'),
-                kwargs.get('database')
-            )
-            )
+                            kwargs.get('host'),
+                            kwargs.get('user'),
+                            kwargs.get('password'),
+                            kwargs.get('port'),
+                            kwargs.get('database')
+                        )
+                        )
             print(e)
             return False
