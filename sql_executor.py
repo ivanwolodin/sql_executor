@@ -1,10 +1,11 @@
 import sys
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QInputDialog, QPushButton, QDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import Qt, QAbstractTableModel
 
 from db_connection import DataBase
+from db_changer_dialog import DialogWindow
 
 
 class TableModel(QAbstractTableModel):
@@ -47,14 +48,8 @@ class MyWindow(QMainWindow):
         QMainWindow.__init__(self)
         uic.loadUi("mainwindow.ui", self)
         self.data_base_obj = DataBase()
-
-        # create db and fill it with values
-        if self.data_base_obj.create_db_in_memory():
-            self.fill_table_view(status='Db is ready')
-        else:
-            self.fill_table_view(status='Db is not ready')
-
         self.pushButton.pressed.connect(self.execute_sql_request)
+        self.comboBox.currentIndexChanged[str].connect(self.change_db)
 
     def execute_sql_request(self) -> None:
 
@@ -72,6 +67,13 @@ class MyWindow(QMainWindow):
             raise Exception('Specify data')
         model = TableModel(data)
         self.tableViewSqlResult.setModel(model)
+
+    def change_db(self):
+        db_type = self.comboBox.itemText(self.comboBox.currentIndex())
+        if db_type != ':memory:':
+            self.dialog = DialogWindow(database_obj=self.data_base_obj, selected_db_type=db_type)
+            self.dialog.show()
+        self.data_base_obj.capture_database(database_type=db_type)
 
 
 if __name__ == "__main__":
