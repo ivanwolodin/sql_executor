@@ -8,6 +8,18 @@ from db_connection import DataBase
 from db_changer_dialog import DialogWindow
 from logger import logger
 
+# TODO:
+#
+#  улучшить подключение к другой sqlite базы
+#
+#  Исправить амодельный парсинг SQL (??)
+#
+#  убрать pandas (вместе с зависимостями - 40 мегабайт кода!)
+#  чтобы воспользоваться функциональностью двумерного массива.
+#
+#  Потенциальное зависание/падение на запросе
+#  select * from 'order' o1 join 'order' o2 on o1.Id != o2.Id join 'order' o3 on o2.Id != o3.Id;
+
 
 class TableModel(QAbstractTableModel):
     def __init__(self, data):
