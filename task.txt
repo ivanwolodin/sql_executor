@@ -1,18 +1,42 @@
-# Задание:
-* Написать программу для выполнения SQL запросов и отображения результата
-* Python3, PyQt5, DB-API 2.0 (не QtSql!)
-* Поле для ввода sqlite3 connection string (default value - :memory:)
-* Поле для ввода запроса
-* Кнопочка для запуска
-* QTableView для отображения результата (не QTableWidget!)
-* Вы можете делать разумные предположения о требованиях, не описанных выше. 
- Если у вас возникают вопросы о разумности или значимости какого-то предположения, и вообще какие-либо вопросы - они *приветствуются** в этом чате и не могут повлиять на оценку результата  отрицательно.
+# Technical Assignment: SQL Query Executor
 
-## Дополнительно
-* Доработать connection string, чтобы могло подключаться к другим БД
+## Objective
 
-## Критерии оценки
-* Качество кода
-* User-friendliness
-* Время выполнения
-по опыту предыдущих кандидатов: порядок критериев ВАЖЕН
+Develop a desktop application for executing SQL queries and displaying their results in a graphical interface.
+
+## Functional Requirements
+
+The application must meet the following requirements:
+
+1. **Programming Language:** Python 3.
+2. **GUI Framework:** PyQt5.
+3. **Database Connectivity:** Python DB-API 2.0.
+   - Using QtSql is explicitly prohibited.
+4. **Database Connection Configuration:**
+   - Provide an input field for the SQLite connection string.
+   - Use `:memory:` as the default connection string.
+5. **SQL Query Input:**
+   - Provide an input field for entering SQL queries.
+6. **Query Execution:**
+   - Provide a button to execute the entered SQL query.
+7. **Query Results:**
+   - Display query results using `QTableView`.
+   - Using `QTableWidget` is explicitly prohibited.
+
+## Additional Requirements
+
+Extend the database connection configuration to support additional database engines beyond SQLite.
+
+Reasonable assumptions and implementation decisions are allowed where requirements are not explicitly defined.
+
+Questions and suggestions regarding ambiguous or potentially significant requirements are welcome and will not negatively affect the evaluation.
+
+## Evaluation Criteria
+
+The solution will be evaluated based on the following criteria, in order of importance:
+
+1. **Code Quality** — code structure, readability, maintainability, and overall implementation quality.
+2. **User-Friendliness** — usability and clarity of the graphical interface.
+3. **Execution Time** — application performance and query execution efficiency.
+
+The evaluation criteria are prioritized in the order listed above.
